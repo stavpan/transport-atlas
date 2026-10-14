@@ -46,3 +46,8 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # the site is ~46 MB (four builds: full + L1/L2/L3, plus figures and the single-file
+          # edition). The first deployment can sit in `updating_pages` for a while, and the
+          # action's default timeout is 10 minutes — which we exceeded once. Give it 30.
+          timeout: 1800000
