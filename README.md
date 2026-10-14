@@ -3,6 +3,11 @@
 *πάντα ῥεῖ — "all things flow": a layered, self-contained reference for transport phenomena, from
 "what is a flux?" to fractional operators, kinetic theory, criticality, synchrony and operator learning.*
 
+**Live site:** <https://stavpan.github.io/transport-atlas/> ·
+**Source:** <https://github.com/stavpan/transport-atlas> ·
+**Offline edition:** [`dist/atlas-standalone.html`](dist/atlas-standalone.html) (~10 MB, one file, no server)
+— every push to `main` rebuilds and redeploys the site through `.github/workflows/pages.yml`.
+
 This is a complete rebuild of the "comprehensive dictionary of transport phenomena"
 idea, restructured as a **layered atlas of notes** rather than a flat dictionary.
 
