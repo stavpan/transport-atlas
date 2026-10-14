@@ -1,0 +1,22 @@
+% Transport Atlas — LaTeX preamble for the PDF build (xelatex)
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{stmaryrd}   % \llbracket \rrbracket (used for jump conditions)
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{\small\textit{The Transport Atlas}}
+\fancyhead[R]{\small\thepage}
+\setlength{\headheight}{14pt}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries\color{RoyalBlue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{0.6em}{}
+% keep long code lines from overflowing
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}

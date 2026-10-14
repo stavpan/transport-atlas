@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-level="{{LEVEL}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} · Panta Rhei — the Transport Atlas</title>
+<link rel="stylesheet" href="{{ROOT}}/assets/style.css">
+<link rel="icon" href="{{ROOT}}/assets/favicon.svg" type="image/svg+xml">
+{{MATHHEAD}}
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ROOT}}/index.html"><span class="brand-mark">πάντα ῥεῖ</span>
+    <span class="brand-name">Panta Rhei</span><span class="brand-sub">the Transport Atlas</span></a>
+  <span class="lvl-badge" title="depth of this rendering">{{LEVEL_LABEL}}</span>
+  <div class="searchwrap">
+    <input id="search" type="search" placeholder="Search notes  (press /)" autocomplete="off"
+           aria-label="Search notes" spellcheck="false">
+    <div id="results" class="results" hidden></div>
+  </div>
+</header>
+<div class="layout">
+{{NAV}}
+<main class="content">
+<article class="markdown">
+{{BODY}}
+</article>
+{{FOOTER}}
+</main>
+{{TOC}}
+</div>
+<script>window.ATLAS_ROOT = {{ROOT_JSON}};</script>
+<script src="{{ROOT}}/assets/atlas.js"></script>
+</body>
+</html>
