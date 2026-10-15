@@ -108,3 +108,7 @@ the fitted slope — the tail is cut off by the box size, not by any physical sc
 (right), hovering at the critical slope where one more grain may do nothing at all or rearrange the whole
 pile. The finite-size *collapse* of such distributions is the real evidence for scaling, and it is shown
 in the [scaling note](07-scaling-and-self-similarity.md).](../../figures/soc-avalanche-statistics.svg)
+
+![**Animation A6.** A critical pile at work: grains drop, avalanches ripple out, and the
+size distribution on the right assembles itself into a power law while you watch. Nothing is
+tuned — the separation of driving and relaxation timescales does all of it.](../../figures/anim-soc-avalanches.webp)

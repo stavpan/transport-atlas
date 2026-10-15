@@ -40,15 +40,15 @@ def fig_chaos():
 
     tidy(b)
     b.semilogy(t, d, color=VIOLET, lw=1.8)
-    b.semilogy(t, 1e-6 * np.exp(0.906 * t), color=MUTED, lw=1.2, ls=(0, (4, 3)))
+    b.semilogy(t, 1e-6 * np.exp(0.906 * t), color=MUTED, lw=1.2, ls=(0, (4, 3)),
+               label=r"reference slope: $\lambda\approx0.91$")
     b.set_title("Separation grows exponentially — then saturates")
     b.set_xlabel("time $t$"); b.set_ylabel("$|\\delta|$")
-    b.annotate("slope = largest Lyapunov exponent $\\lambda\\approx0.91$",
-               (14, 1.0), (4.0, 4e-4), fontsize=8.8, color=MUTED,
-               arrowprops=dict(arrowstyle="->", color=MUTED, lw=1.0))
+    b.legend(fontsize=8.4, loc="upper left")
     b.annotate("Lyapunov time $t_\\lambda=1/\\lambda\\approx1.1$:\n"
                "$10^{-6}$ becomes $O(1)$ in $\\approx14$ time units",
-               (16, 0.4), (6.5, 4e-6), fontsize=8.8, color=ROSE,
+               (20, 0.35), (0.30, 0.12), textcoords="axes fraction", fontsize=8.8,
+               color=ROSE, ha="left", va="bottom",
                arrowprops=dict(arrowstyle="->", color=ROSE, lw=1.0))
     b.set_ylim(1e-7, 60)
     save(fig, "chaos-sensitive-dependence")
@@ -158,8 +158,9 @@ def fig_noise_induced():
     a.set_ylim(-0.04, 1.75)
     a.set_xlabel("state $x$"); a.set_ylabel("$V$ and stationary density $\\propto e^{-V/D}$")
     a.set_title("Raising the noise melts the bimodal state")
-    a.legend(fontsize=8.4, loc="upper center")
-    a.text(0.0, 1.35, "two-peaked: the order survives\nthe noise", fontsize=8.6, color=BLUE, ha="center")
+    a.legend(fontsize=8.4, loc="upper right")
+    a.text(0.0, 1.58, "two-peaked: the order survives\nthe noise", fontsize=8.6, color=BLUE,
+           ha="center")
     a.text(0.0, 0.28, "one-peaked: the noise\nselected the mixed state", fontsize=8.6,
            color=ROSE, ha="center")
 
@@ -190,8 +191,9 @@ def fig_noise_induced():
     b.annotate("the signal is periodic but sub-threshold:\nno noise $\\to$ no response; "
                "a little noise $\\to$\nprobabilistic hopping in step with the signal;\n"
                "too much noise $\\to$ the signal drowns",
-               (Ds[kbest], snr[kbest]), (1.4e-2, snr[kbest] * 1.35), fontsize=8.4,
-               color=MUTED, arrowprops=dict(arrowstyle="->", color=ROSE, lw=1.1))
+               (Ds[kbest], snr[kbest]), (0.40, 0.16), textcoords="axes fraction",
+               fontsize=8.4, color=MUTED, ha="left", va="bottom",
+               arrowprops=dict(arrowstyle="->", color=ROSE, lw=1.1))
     b.text(0.30, 0.9, "used to explain ice-age cycles,\nand hiding in neurons and sensors",
            fontsize=8.4, color=VIOLET, style="italic")
     save(fig, "noise-induced-transitions")

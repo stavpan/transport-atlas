@@ -22,6 +22,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import re
@@ -270,6 +271,8 @@ def footer_html(flat, current_id: str, root: str) -> str:
         nxt = flat[i + 1]
         out.append(f'<a href="{root}/{nxt["url"]}">{nxt["title"]} →</a>')
     out.append("</div>")
+    out.append('<div class="keys">keys: <b>/</b> search · <b>a</b> atlas · <b>g</b> graph · '
+               '<b>t</b> top · click a figure to enlarge</div>')
     return "\n".join(out)
 
 
@@ -315,6 +318,14 @@ def postprocess(html: str) -> str:
                 f'<span class="rung">L{lvl}</span>{rest}</h2>')
 
     html = re.sub(r'<h2 id="([^"]+)">L([1-4])[^<]*?(.*?)</h2>', ladder, html)
+
+    # every section heading becomes a deep link ("§"), and images load lazily
+    def anchor(m):
+        return ('<h%s%s id="%s">%s<a class="anchor" href="#%s" aria-label="link to this '
+                'section">§</a></h%s>' % (m.group(1), m.group(2), m.group(3), m.group(4),
+                                          m.group(3), m.group(1)))
+    html = re.sub(r'<h([23])([^>]*)\sid="([^"]+)">(.*?)</h\1>', anchor, html, flags=re.S)
+    html = re.sub(r'<img (?!.*loading=)src="', '<img loading="lazy" decoding="async" src="', html)
     return html
 
 
@@ -325,7 +336,8 @@ def extract_toc(html: str, levels=(2, 3)) -> str:
         lvl = int(m.group(1))
         if lvl not in levels:
             continue
-        text = re.sub(r"<[^>]+>", "", m.group(3)).strip()
+        raw = re.sub(r'<a class="anchor".*?</a>', "", m.group(3), flags=re.S)
+        text = re.sub(r"<[^>]+>", "", raw).strip()
         text = (text.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
                 .replace("&quot;", '"').replace("&#39;", "'"))
         if text:
@@ -397,9 +409,13 @@ def copy_resources(out_root: Path):
         dst = out_root / sub
         dst.mkdir(parents=True, exist_ok=True)
         for f in src.iterdir():
-            # .png and .pdf are build artefacts for print/fallback use only, and template.html
-            # is consumed by build.py itself — none of them belong in the published site.
-            if f.is_file() and f.suffix.lower() not in (".png", ".pdf") and f.name != "template.html":
+            # .png and .pdf are build artefacts for print/fallback use only; template.html is
+            # consumed by build.py itself; the animated .gif files are frame-thinned fallbacks;
+            # and `anim-*.svg` are the static filmstrip *posters* of animations, which exist for
+            # the print build — the pages embed the animated .webp instead.
+            if f.is_file() and f.suffix.lower() not in (".png", ".pdf", ".gif") \
+                    and not (f.name.startswith("anim-") and f.suffix.lower() == ".svg") \
+                    and f.name != "template.html":
                 shutil.copy2(f, dst / f.name)
 
 
@@ -472,6 +488,18 @@ def build_standalone(notes, cats, out_root: Path, offline: bool = True):
     def figure_svg(name):
         if name not in fig_cache:
             p = FIG_DIR / name
+            low = name.lower()
+            if low.endswith((".webp", ".gif")):
+                # animations (and their .gif fallback) are inlined as data URIs so that the
+                # single-file edition keeps its promise: one file, no side-car assets.
+                if p.exists():
+                    mime = "image/webp" if low.endswith(".webp") else "image/gif"
+                    fig_cache[name] = (
+                        '<img class="anim" loading="lazy" alt="animation" src="data:%s;base64,%s">'
+                        % (mime, base64.b64encode(p.read_bytes()).decode("ascii")))
+                else:
+                    fig_cache[name] = ""
+                return fig_cache[name]
             svg = p.read_text(encoding="utf-8") if p.exists() else ""
             svg = re.sub(r'<svg([^>]*?)\swidth="[^"]*"([^>]*?)\sheight="[^"]*"',
                          r'<svg\1\2', svg, count=1)
@@ -502,7 +530,8 @@ def build_standalone(notes, cats, out_root: Path, offline: bool = True):
             body = re.sub(r"\]\(([^)\s]+?\.md)(?:#([^)]*))?\)", sub_link, body)
             html = pandoc_fragment(body, offline=offline, toc_depth=0)
             html = postprocess(html)
-            html = re.sub(r'<img src="[^"]*figures/([^"]+)"[^>]*/?>',
+            # NB the tag may carry loading="lazy"/decoding/class attributes before src
+            html = re.sub(r'<img\b[^>]*?src="[^"]*figures/([^"]+)"[^>]*?/?>',
                           lambda m: '<span class="fig">' + figure_svg(m.group(1)) + "</span>", html)
             html = re.sub(r'<a href="([^"]+?)\.md(#[^"]*)?"',
                           lambda m: '<a href="' + (anchor_link(n, m.group(1)) or m.group(1)) + '"', html)
@@ -595,6 +624,8 @@ def pdf_markdown(notes, level):
     for n in notes:
         body = trim(n["body"], level)
         body = re.sub(r"\]\((?:\.\./)*figures/([^)]+?)\.svg\)", r"](\g<1>.pdf)", body)
+        # animations go into print as their static frame-strip poster
+        body = re.sub(r"\]\((?:\.\./)*figures/([^)]+?)\.(?:webp|gif)\)", r"](\g<1>.png)", body)
         out.append(f"\\newpage\n\n# {n['title']}\n\n" + body)
     return "\n\n".join(out)
 
@@ -634,7 +665,7 @@ def check_links(notes):
             t = target.split("#")[0]
             if not t:
                 continue
-            if t.endswith((".svg", ".pdf", ".png")):
+            if t.endswith((".svg", ".pdf", ".png", ".webp", ".gif")):
                 if not (base / t).resolve().exists():
                     bad.append(f'{n["rel"]}: missing figure {target}')
             elif t.endswith(".md"):

@@ -21,7 +21,7 @@ idea, restructured as a **layered atlas of notes** rather than a flat dictionary
 | 17 terms in 4 hand-made buckets | **14 categories**: *beyond-PDEs*, a **Universality** part that argues the strongest version of the claim (and states its limits), a **Recurring mechanisms** part (equilibria → stability → bifurcation → chaos → criticality → scaling → duality → noise, plus an intersections map and a source-marked bibliography), and **Panta Rhei** — the theme taken seriously |
 | Equations appear with no derivation | Every equation is **earned**: mechanism → dimensionless form → operator → analysis → numerics |
 | Numerical behaviour described in prose | Regime maps, stability regions, error portraits, amplification factors — **generated vector figures** |
-| Figure-free | **35 vector figures** (matplotlib) + a **114-node / 335-edge concept map** (graphviz), as SVG for the web, PDF for print and PNG as a fallback |
+| Figure-free | **35 vector figures** + **7 animated figures** (matplotlib) + a **114-node / 335-edge concept map** (graphviz), as SVG for the web, PDF for print, animated WebP/GIF for motion, and PNG as a fallback |
 | No path for a beginner | **Reading paths by level** (L1 newcomer → L4 specialist), a browsable site, an interactive **connection graph**, and client-side search |
 | No cross-domain intuition | A **Bridges** category: transport in engineering, geology, biology, finance, plasmas, images, networks, quantum matter and machine learning |
 | Stops at ordinary PDEs | **Beyond-PDEs**: shocks, Hamilton–Jacobi, fractional/nonlocal, memory, Cattaneo, porous medium, SPDEs, homogenisation, level sets, optimal transport & gradient flows, microcontinuum, variational inequalities, MHD/relativistic, **integrable systems, variational principles, delay** |
@@ -64,7 +64,7 @@ idea, restructured as a **layered atlas of notes** rather than a flat dictionary
 | `dist/index.html` | the master note: one balance law, reading paths, the concept map and a **generated catalogue of every note** |
 | `dist/notes/**/*.html` | one page per note, with sidebar navigation, on-page TOC, and prev/next |
 | `dist/graph.html` | **interactive connection graph** built from the real 1100+ note-to-note links (drag, hover to isolate, click to open) |
-| `dist/atlas-standalone.html` | **one self-contained file (~10 MB)**: all notes, all figures, search, MathML, works offline — the shareable edition |
+| `dist/atlas-standalone.html` | **one self-contained file (~18 MB)**: all notes, all figures *including the seven animations*, search, MathML — the shareable edition |
 | `dist/L1`, `dist/L2`, `dist/L3` | the same site with the deeper ladder rungs trimmed away (the same URLs, shallower content) |
 | `dist/all-in-one.html` | every note concatenated, for reading or printing in one scroll |
 | `dist/atlas.pdf` | printable build (~3.4 MB, ~320 pages) with vector figures |
@@ -142,12 +142,58 @@ transport-atlas/
 └── dist/                  ← generated site
 ```
 
+## Figures and animations
+
+Every figure is generated from a script — there are no screenshots and no hand-drawn diagrams.
+
+```
+scripts/figlib.py       the style: palette, grids, helpers (arrow/box/plain/tidy), and the
+                        writers  save()  (SVG + PDF + PNG)  and  save_anim()  (WebP + GIF)
+scripts/figpart1–13.py  the static figures, one module per group, each registering itself
+scripts/figanim.py      the animated figures (A1–A7) plus a static *filmstrip* poster each
+scripts/make_figures.py the CLI: every figure, or names, or --gifs / --list
+scripts/audit_figures.py  the legibility gate (see below)
+scripts/make_concept_map.py  the graphviz concept map
+```
+
+**Three formats, three jobs.** Vector `SVG` for the web, vector `PDF` for print, raster `PNG`
+as a fallback — plus, for the seven animated figures, an animated `WebP` (what the site and the
+vault embed; 10–30× smaller than the equivalent GIF) and a downscaled `GIF` fallback. Animations
+are the phenomena that *are* motion: marbling, pattern growth, locking, shock formation, chaotic
+divergence, avalanching and coarsening. In the print build each animation becomes its filmstrip,
+in the single-file edition it is inlined as a data URI, and in the Obsidian vault it plays.
+
+**The legibility gate.** `scripts/audit_figures.py` re-runs every figure, intercepts `save()`
+so nothing is written, and inspects the live artists: it flags text below 8 pt, text that
+matplotlib clips away, text thrown far outside the canvas, and — the defect that code review
+never catches — two hand-placed labels sitting on top of each other. Findings that involve only
+axis furniture (a label grazing a tick number) are printed as advisory notes and are not counted.
+It exits non-zero when there is something to fix, so it can gate CI (the workflow runs it as an
+advisory step, since font metrics vary between matplotlib versions):
+
+```bash
+/home/stav/.pixi/envs/sage/bin/python scripts/audit_figures.py        # quiet unless something is wrong
+/home/stav/.pixi/envs/sage/bin/python scripts/audit_figures.py --verbose
+```
+
+The current state of the figure set: **0 sub-8pt labels, 0 clipped annotations, 0 collisions
+between hand-placed labels**. Two classes of defect were found and fixed by this gate while it was
+being written: a legend whose five swatches were all drawn at the same coordinates, and annotations
+that `ax.annotate` was silently clipping at the axes edge (figlib now un-clips every annotation
+before a figure is written).
+
+**Conventions the figures follow.** One idea per figure, stated in the title; colour as a scale
+rather than decoration (sequential for magnitudes, diverging for signed fields, hue only when the
+quantity is genuinely cyclic); annotations that name the *mechanism* rather than the data; and a
+second panel whenever a rule produces a pattern, because the rule is what people remember.
+
 ## Building
 
 Requirements (all already present in this workspace):
 
 * `pandoc` ≥ 3 — `/home/stav/.pixi/bin/pandoc`
-* Python 3 with `matplotlib`/`numpy` for the figures — `/home/stav/.pixi/envs/sage/bin/python`
+* Python 3 with `matplotlib`/`numpy` for the figures, `pillow` for the animations —
+  `/home/stav/.pixi/envs/sage/bin/python`
 * `graphviz` (`dot`) for the concept map, `xelatex` for the PDF build
 
 ```bash

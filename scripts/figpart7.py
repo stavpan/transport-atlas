@@ -15,7 +15,8 @@ def fig_fronts():
     for t, col in [(2, "#111827"), (8, BLUE), (18, TEAL), (32, VIOLET)]:
         a.plot(x, 1.0 / (1 + np.exp((x - 2 * t) / 1.0)), color=col, label="$t=%g$" % t)
     a.annotate("$c=2\\sqrt{Dk}$ is selected\nby the leading edge,\nnot by the bulk",
-               (2 * 18 + 8, 0.2), (2 * 18 + 14, 0.62), fontsize=8.5, color=VIOLET,
+               (2 * 18 + 8, 0.2), (0.05, 0.74), textcoords="axes fraction", fontsize=8.5,
+               color=VIOLET, ha="left",
                arrowprops=dict(arrowstyle="->", color=VIOLET, lw=1.1))
     a.set_xlabel("$x$"); a.set_ylabel("$c$")
     a.set_title("Fisher–KPP travelling wave\n$\\partial_t c=D\\partial_x^2 c+kc(1-c)$")

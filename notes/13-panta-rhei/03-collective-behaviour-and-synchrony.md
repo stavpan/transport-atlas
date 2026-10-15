@@ -59,6 +59,11 @@ above threshold, coloured by natural frequency — below, a smeared circle; abov
 tail of still-drifting outliers. That tail is *not* a defect: it is the mathematically necessary
 consequence of having frequencies far from the mean.](../../figures/kuramoto-synchronisation.svg)
 
+![**Animation A3.** Locking, in real time. Turn the coupling up and a scattered cloud of
+phases collapses onto a locked cluster; the order parameter on the right traces the
+$\sqrt{1-K_c/K}$ law as it happens, with the threshold exactly where the theory puts
+it.](../../figures/anim-kuramoto-locking.webp)
+
 Where the same structure appears (a partial list, because the model is deliberately indifferent to the
 substrate):
 

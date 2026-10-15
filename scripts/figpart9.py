@@ -54,7 +54,7 @@ def fig_analogy():
         a.text(2.1, y + 0.52, law, fontsize=11, va="center")
         a.text(4.7, y + 0.52, "potential: " + pot, fontsize=9, va="center", color=MUTED)
         a.text(7.0, y + 0.52, "flux ratio: " + dimless, fontsize=9, va="center", color=MUTED)
-        a.text(2.1, y - 0.02, who, fontsize=7.5, va="center", color=col)
+        a.text(2.1, y - 0.02, who, fontsize=8.4, va="center", color=col)
     a.text(5.0, 0.55, "flux $=-$(transport property) $\\times$ $\\nabla$(potential)",
            ha="center", fontsize=11, color=INK)
     a.set_title("the analogy that built chemical engineering\n"
@@ -97,7 +97,7 @@ def fig_subsidence():
     x = np.linspace(-6, 6, 400)
     bowl = -0.55 * np.exp(-x ** 2 / 9)
     a.fill_between(x, -1.35, -1.0, color="#dbeafe")
-    a.text(-5.7, -1.28, "depleting reservoir layer", fontsize=8.5, color="#1e40af")
+    a.text(-1.2, -1.28, "depleting reservoir layer", fontsize=8.5, color="#1e40af")
     a.plot(x, np.zeros_like(x), color=MUTED, lw=1.4, label="original ground surface")
     a.plot(x, bowl, color=ROSE, lw=2.4, label="after depletion: compaction bowl")
     for x0 in (-3.5, 0.0, 3.5):

@@ -22,12 +22,12 @@ CELLS = [
     (1, 2, "transitions triggered\na distance away", "crisis"),
     (1, 3, "stochastic resonance,\nfluctuation theorems", "control"),
     (1, 4, "synchrony by common\nnoise; noise-assisted order", "pattern"),
-    (1, 5, "random media, anomalous\ndiffusion, trapping", "memory"),
+    (1, 5, "random media,\nanomalous trapping", "memory"),
     (1, 6, "coloured noise,\nfractional FDT", "law"),
     (1, 7, "entropy production,\nsecond law as a budget", "law"),
     (2, 2, "long feedback trains,\nstate-dependent delay", "crisis"),
     (2, 3, "oscillator death,\ncoherence resonance", "pattern"),
-    (2, 4, "anticipation, traffic\nwaves, delay networks", "pattern"),
+    (2, 4, "anticipation,\ntraffic waves", "pattern"),
     (2, 5, "path memory in rays,\ndelayed advection", "memory"),
     (2, 6, "aging, retardation,\nretarded kernels", "memory"),
     (2, 7, "causality as a hard\nconstraint on laws", "law"),
@@ -37,14 +37,14 @@ CELLS = [
     (3, 6, "learning, plasticity,\nhysteretic response", "memory"),
     (3, 7, "control of conserved\nquantities; source terms", "control"),
     (4, 4, "network synchronisation,\nmetastable clusters", "pattern"),
-    (4, 5, "geometry selects the\ndynamics, not the reverse", "law"),
+    (4, 5, "geometry selects\nthe dynamics", "law"),
     (4, 6, "co-evolving networks,\nreinforcement", "memory"),
-    (4, 7, "momentum and mass\nexchange across links", "law"),
-    (5, 5, "hierarchies, fractals,\nmanifolds, constrictions", "pattern"),
+    (4, 7, "momentum and mass\nexchange", "law"),
+    (5, 5, "hierarchies, fractals,\nconstrictions", "pattern"),
     (5, 6, "trapping, path\ndependence, fingerprints", "memory"),
-    (5, 7, "divergence and Stokes\ntheorems on curved space", "law"),
+    (5, 7, "Stokes theorems\non curved space", "law"),
     (6, 6, "hierarchical memory,\naging kernels", "memory"),
-    (6, 7, "non-Markov thermodynamics;\nsecond law with memory", "law"),
+    (6, 7, "non-Markov thermo-\ndynamics with memory", "law"),
     (7, 7, "constraints, integrable\ntowers, selection rules", "law"),
 ]
 
@@ -53,8 +53,8 @@ CELLS = [
 def fig_intersections():
     """Where two ideas meet, something neither contains appears."""
     n = len(MECH)
-    fig, ax = plt.subplots(figsize=(12.6, 10.8))
-    plain(ax, (-2.9, n + 0.15), (-0.75, n + 0.15))
+    fig, ax = plt.subplots(figsize=(13.4, 11.4))
+    plain(ax, (-2.9, n + 0.15), (-2.0, n + 0.15))
     for k, m in enumerate(MECH):
         ax.text(-0.12, n - k - 0.5, m, ha="right", va="center", fontsize=10.5,
                 color=INK, weight="bold")
@@ -74,12 +74,12 @@ def fig_intersections():
                                      ("memory", "the past leaks in"),
                                      ("control", "noise/feedback used as a tool"),
                                      ("law", "a new conservation or constraint")]):
-        ax.add_patch(FancyBboxPatch((-2.85, -0.55 + 0.0), 0.24, 0.13,
+        ax.add_patch(FancyBboxPatch((-2.85, -0.62 - k * 0.19), 0.24, 0.13,
                                     boxstyle="round,pad=0.002,rounding_size=0.05",
                                     linewidth=1.2, edgecolor=KEY[kind], facecolor=KEY[kind],
                                     alpha=0.16))
-        ax.text(-2.52, -0.49, lbl, va="center", fontsize=9.5, color=KEY[kind])
-    ax.text(-2.85, -0.72, "Read the upper triangle only (combinations are symmetric); "
+        ax.text(-2.52, -0.555 - k * 0.19, lbl, va="center", fontsize=9.5, color=KEY[kind])
+    ax.text(-2.85, -1.78, "Read the upper triangle only (combinations are symmetric); "
             "colour = the kind of thing that appears.  A curated map, not a measurement.",
             fontsize=9, color=MUTED, style="italic")
     save(fig, "intersections-matrix")
@@ -234,9 +234,10 @@ def fig_arrow_of_time():
     b.set_title("Decay $e^{-Dk^2t}$: fine scales die first")
     b.set_xlabel("$k^2$  (inverse length$^2$)"); b.set_ylabel("mode amplitude")
     b.legend(fontsize=8.4)
-    b.text(90, 1.5e-6, "a straight line here means the\ndecay rate is exactly $Dk^2$.\n"
-           "Small scales vanish first — and they\nare the ones you cannot measure\nwithout noise.",
-           fontsize=8.3, color=MUTED, style="italic")
+    b.text(0.03, 0.04, "a straight line here means the\ndecay rate is exactly $Dk^2$. "
+           "Small scales vanish first — and they\nare the ones you cannot measure "
+           "without noise.", transform=b.transAxes, fontsize=8.4, color=MUTED,
+           style="italic", va="bottom")
 
     tidy(c)
     t2 = np.linspace(-0.4, 3.2, 400)

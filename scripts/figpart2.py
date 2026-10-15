@@ -55,7 +55,7 @@ def fig_regime_map():
     ax.text(2e3, 3e-3, "advection wins\n($\\mathrm{Pe}>1,\\ \\mathrm{Da}<1$)",
             color=BLUE, fontsize=9.5)
     ax.text(1e-1, 5e2, "reaction wins\n($\\mathrm{Da}>1$)", color=AMBER, fontsize=9.5)
-    ax.text(3e-2, 2e-2, "transient plume", color=MUTED, fontsize=8.5, rotation=-30)
+    ax.text(1.5e-3, 4e-1, "transient plume", color=MUTED, fontsize=8.5, rotation=-30)
     for x, y, lab in [(2e4, 1e-2, "river tracer"), (1e-1, 1e-1, "pore-scale solute"),
                       (3e-2, 3e3, "flame"), (5e1, 5e-1, "capillary uptake"),
                       (8e-1, 8e-1, "boundary-layer reaction"),

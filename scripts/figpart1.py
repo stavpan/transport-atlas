@@ -80,8 +80,8 @@ def fig_taxonomy():
     for x0 in np.linspace(0.55, 1.0, 3):
         a.plot([x0, x0 + 1.15 * (1 - x0)], [0, 1], color=GREEN, lw=1.2, ls="--")
     a.plot([0.6, 1.0], [0, 1], color=ROSE, lw=2.4)
-    a.text(0.04, 0.7, "rarefaction fan\n(characteristics spread)", color=GREEN, fontsize=7.5)
-    a.text(0.6, 0.18, "shock: they collide", color=ROSE, fontsize=7.5, rotation=58)
+    a.text(0.04, 0.7, "rarefaction fan\n(characteristics spread)", color=GREEN, fontsize=8.6)
+    a.text(0.6, 0.18, "shock: they collide", color=ROSE, fontsize=8.6, rotation=58)
     a.set_title("Hyperbolic\n$\\partial_t c+\\partial_x(uc)=0$", fontsize=10)
     a.set_ylabel("$t$")
     a = tidy(axs[1])
@@ -91,7 +91,7 @@ def fig_taxonomy():
                label="$t=%.2f$" % tau)
     a.legend(loc="upper right")
     a.text(0.03, 0.66, "smooths, never sharpens;\nsignals spread\ninfinitely fast",
-           transform=a.transAxes, color=MUTED, fontsize=7.5)
+           transform=a.transAxes, color=MUTED, fontsize=8.6)
     a.set_title("Parabolic\n$\\partial_t c=D\\,\\partial_x^2 c$", fontsize=10)
     a = tidy(axs[2], grid=False)
     xx, yy = np.meshgrid(np.linspace(0, 1, 160), np.linspace(0, 1, 160))

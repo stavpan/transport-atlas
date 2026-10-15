@@ -25,11 +25,14 @@ jobs:
       - name: system tools (pandoc for the site, graphviz for the concept map)
         run: sudo apt-get update && sudo apt-get install -y pandoc graphviz
       - name: python deps for the figures
-        run: pip install --quiet matplotlib numpy
+        run: pip install --quiet matplotlib numpy pillow
       - name: figures
         run: |
           python scripts/make_figures.py
           python scripts/make_concept_map.py
+      - name: audit figure legibility
+        continue-on-error: true      # a hard gate locally; advisory here (font metrics differ)
+        run: python scripts/audit_figures.py
       - name: build the site
         run: python build.py --levels --standalone
       - name: upload artefact

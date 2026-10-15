@@ -21,7 +21,17 @@ for _i in range(1, 14):
     except ModuleNotFoundError:
         pass
 
+try:
+    importlib.import_module("figanim")                  # animated figures (*.gif + poster)
+except ModuleNotFoundError:
+    pass
+
 from figlib import main                                 # noqa: E402
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    import figlib
+    argv = sys.argv[1:]
+    if "--gifs" in argv:                      # regenerate only the animated figures
+        argv = [a for a in argv if a != "--gifs"] + \
+               [n for n in figlib.ORDER if n.startswith("anim-")]
+    sys.exit(main(argv))

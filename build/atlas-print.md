@@ -146,6 +146,11 @@ another field's problem, including the cases where that went wrong — before cl
 
 ## The map
 
+Every figure here is generated from a script and audited for legibility (text is never below
+8 pt, nothing is clipped, no two labels overlap), and seven of them are **animations** —
+the phenomena that *are* motion, numbered A1–A7, which play in the web and single-file editions
+and become four-panel filmstrips in print.
+
 ![**Figure 1.** Every note in the atlas, wired together. Colour marks the level at which a topic is first useful (blue L1, teal L2, violet L3, amber L4). The loops are real: homogenisation feeds subsidence, kinetic theory feeds turbulence closures, and optimal transport connects diffusion to geometry.](concept-map.pdf)
 
 ## Two habits that repay themselves
@@ -11120,6 +11125,10 @@ preferred size. The right panel is the reason: only a *band* of wavenumbers grow
 curve has a maximum. Nonlinearity sets the final amplitude and arbitrates the competition between the
 surviving modes.](reaction-diffusion-art.pdf)
 
+![**Animation A4.** A smooth wave steepening into a shock. Nothing is added and nothing
+removed: the fast part of the wave catches up the slow part, and at $t=1$ the solution stops
+being differentiable. This is nonlinearity with no escape clause.](anim-shock-formation.png)
+
 ## L3 · The weakly nonlinear toolkit
 
 When the failure of superposition is *small*, perturbation theory turns a hard PDE into a small set of
@@ -11218,6 +11227,10 @@ same butterfly but cease to be the same trajectory. Right: the separation grows 
 line: slope = the Lyapunov exponent $\lambda\approx0.91$) until it saturates at the size of the
 attractor. Here the Lyapunov time is about 1.1 time units, so $10^{-6}$ becomes O(1) in about 14 of
 them.](chaos-sensitive-dependence.pdf)
+
+![**Animation A5.** Two trajectories started $10^{-6}$ apart, drawn as they evolve. The
+separation grows exponentially until it saturates: after the Lyapunov time the two copies
+agree about nothing except the statistics.](anim-lorenz-divergence.png)
 
 Lyapunov times across the sciences, as commonly quoted (see the [bibliography](11-bibliography.md) for
 provenance) — the spread of *fourteen orders of magnitude* is the point:
@@ -11387,6 +11400,10 @@ the fitted slope — the tail is cut off by the box size, not by any physical sc
 pile. The finite-size *collapse* of such distributions is the real evidence for scaling, and it is shown
 in the [scaling note](07-scaling-and-self-similarity.md).](soc-avalanche-statistics.pdf)
 
+![**Animation A6.** A critical pile at work: grains drop, avalanches ripple out, and the
+size distribution on the right assembles itself into a power law while you watch. Nothing is
+tuned — the separation of driving and relaxation timescales does all of it.](anim-soc-avalanches.png)
+
 \newpage
 
 # Scaling and self-similarity
@@ -11451,6 +11468,10 @@ family — a far stronger claim than one fitted line.
 cutoff. Right: the same data after dividing sizes by $L^{D}$ and rescaling the density — one curve. This is
 what "universality" looks like as a figure, and it is the check to run before believing any power-law
 exponent.](scaling-collapse.pdf)
+
+![**Animation A7.** Coarsening, with the structure factor beside it: domains merge, and the
+peak of $S(k)$ walks steadily to smaller $k$ while the curve keeps its shape — self-similarity
+in time, which is the same collapse as in the figure above.](anim-coarsening.png)
 
 ## L4 · Doing scaling work that survives scrutiny
 
@@ -12005,6 +12026,13 @@ If you are here for the mathematics, start at [the atlas](../00-atlas/index.md).
 theme, read the six notes above in order; the first three are about *what flows*, the last three about
 *what that costs*: direction, memory, and the impossibility of cleanly separating one field from another.
 
+> **On the moving pictures.** Some phenomena in this atlas *are* motion, and a still frame cannot show
+> them, so seven figures are animated: they are numbered **A1–A7** and marked by a small badge in the
+> caption. They play as animated WebP images (a GIF fallback of each lives in `figures/`), the print
+> edition shows a four-panel filmstrip in their place, and the single-file edition
+> (`dist/atlas-standalone.html`) carries them inside the file. Click any figure to see it enlarged;
+> press `/` to search, `a` for the atlas, `g` for the connection graph.
+
 \newpage
 
 # Heraclitus and the river
@@ -12141,10 +12169,18 @@ thousand timesteps. Nothing here is random: the filaments are the *deterministic
 stretch-and-fold. This is Aref's blinking vortex, and it is the same mechanism that swirls cream into
 coffee and then, given time, mixes it away.](generative-flow-art.pdf)
 
+![**Animation A1.** Marbling, in motion: the same two blinking vortices as the figure
+above, run for a few thousand timesteps. Watch the boundary being stretched into filaments —
+this is how a stirred cup mixes *without* any turbulence at all.](anim-flow-marbling.png)
+
 ![**Figure P2.** The other kind of beauty: a Turing pattern grown from two chemicals with a simple
 autocatalytic rule (left) and the reason it looks like this (right) — only a band of wavelengths can grow,
 so the system selects a size. This is the standard Gray–Scott system, and it is the ancestor of half the
 "natural" texture in computer graphics.](reaction-diffusion-art.pdf)
+
+![**Animation A2.** The same pattern growing: seeds are placed, spread, collide and
+settle. The wavelength is chosen by the dynamics, not by the seeds — and every spot stops
+itself by eating the fuel around it.](anim-turing-growth.png)
 
 ## L2 · Why they please: the psychology, briefly and without hand-waving
 
@@ -12279,6 +12315,11 @@ the theoretical square-root law until finite-size fluctuations blur it. Right: p
 above threshold, coloured by natural frequency — below, a smeared circle; above, a locked cluster with a
 tail of still-drifting outliers. That tail is *not* a defect: it is the mathematically necessary
 consequence of having frequencies far from the mean.](kuramoto-synchronisation.pdf)
+
+![**Animation A3.** Locking, in real time. Turn the coupling up and a scattered cloud of
+phases collapses onto a locked cluster; the order parameter on the right traces the
+$\sqrt{1-K_c/K}$ law as it happens, with the threshold exactly where the theory puts
+it.](anim-kuramoto-locking.png)
 
 Where the same structure appears (a partial list, because the model is deliberately indifferent to the
 substrate):

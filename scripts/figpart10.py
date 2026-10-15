@@ -22,10 +22,13 @@ def fig_energy_landscape():
             rr = r.real
             a.plot([rr], [0.25 * rr ** 4 - 0.9 * rr ** 2 + 0.32 * rr], "o",
                    color=BLUE if rr > 0 else ROSE, ms=8, zorder=5)
-    a.annotate("stable minimum\n$V''>0$: perturbations return", (1.29, -0.6), (0.05, 1.05),
+    a.annotate("stable minimum\n$V''>0$: perturbations return", (1.29, -0.6),
+               xytext=(0.04, 0.20), textcoords="axes fraction",
                fontsize=9, color=BLUE, arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.2))
-    a.annotate("unstable maximum\n$V''<0$: perturbations grow", (0.13, -0.08), (0.5, 0.95),
+    a.annotate("unstable maximum\n$V''<0$: perturbations grow", (0.13, -0.08),
+               xytext=(0.60, 0.97), textcoords="axes fraction",
                fontsize=9, color=ROSE, arrowprops=dict(arrowstyle="->", color=ROSE, lw=1.2))
+    a.set_ylim(-0.85, 1.45)
     a.set_title("Energy landscape: $\\dot{x}=-V'(x)$")
     a.set_xlabel("state $x$"); a.set_ylabel("$V(x)$")
 

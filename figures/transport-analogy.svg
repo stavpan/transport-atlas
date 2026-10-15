@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-10-14T14:07:49.016287</dc:date>
+    <dc:date>2026-10-15T15:06:06.378768</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -50,7 +50,7 @@ Q 80.680097 81.729512 80.680097 82.893752
 L 80.680097 121.779368 
 Q 80.680097 122.943608 81.471442 122.943608 
 z
-" clip-path="url(#p53e7dc7823)" style="fill: #ffffff; stroke: #e11d48; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p43da9741a7)" style="fill: #ffffff; stroke: #e11d48; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 81.471442 185.036408 
@@ -63,7 +63,7 @@ Q 80.680097 143.822312 80.680097 144.986552
 L 80.680097 183.872168 
 Q 80.680097 185.036408 81.471442 185.036408 
 z
-" clip-path="url(#p53e7dc7823)" style="fill: #ffffff; stroke: #1f6feb; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p43da9741a7)" style="fill: #ffffff; stroke: #1f6feb; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 81.471442 247.129208 
@@ -76,7 +76,7 @@ Q 80.680097 205.915112 80.680097 207.079352
 L 80.680097 245.964968 
 Q 80.680097 247.129208 81.471442 247.129208 
 z
-" clip-path="url(#p53e7dc7823)" style="fill: #ffffff; stroke: #15803d; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p43da9741a7)" style="fill: #ffffff; stroke: #15803d; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e11d48" x="100.622002" y="106.064685" transform="rotate(-0 100.622002 106.064685)">heat</text>
@@ -135,7 +135,7 @@ z
     </g>
    </g>
    <g id="text_5">
-    <text style="font-size: 7.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #e11d48" x="128.319093" y="125.435455" transform="rotate(-0 128.319093 125.435455)">Fourier</text>
+    <text style="font-size: 8.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #e11d48" x="128.319093" y="125.669279" transform="rotate(-0 128.319093 125.669279)">Fourier</text>
    </g>
    <g id="text_6">
     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1f6feb" x="100.622002" y="167.158266" transform="rotate(-0 100.622002 167.158266)">mass</text>
@@ -194,7 +194,7 @@ z
     </g>
    </g>
    <g id="text_10">
-    <text style="font-size: 7.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1f6feb" x="128.319093" y="187.528255" transform="rotate(-0 128.319093 187.528255)">Fick</text>
+    <text style="font-size: 8.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1f6feb" x="128.319093" y="187.762079" transform="rotate(-0 128.319093 187.762079)">Fick</text>
    </g>
    <g id="text_11">
     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #15803d" x="100.622002" y="229.962004" transform="rotate(-0 100.622002 229.962004)">momentum</text>
@@ -252,7 +252,7 @@ z
     </g>
    </g>
    <g id="text_15">
-    <text style="font-size: 7.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #15803d" x="128.319093" y="249.620762" transform="rotate(-0 128.319093 249.620762)">Newton</text>
+    <text style="font-size: 8.4px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #15803d" x="128.319093" y="249.854551" transform="rotate(-0 128.319093 249.854551)">Newton</text>
    </g>
    <g id="text_16">
     <!-- flux $=-$(transport property) $\times$ $\nabla$(potential) -->
@@ -330,7 +330,7 @@ Q 399.856097 114.716312 399.856097 115.880552
 L 399.856097 160.587368 
 Q 399.856097 161.751608 400.647442 161.751608 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #fff1f2; stroke: #e11d48; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #fff1f2; stroke: #e11d48; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
     <path d="M 486.376533 161.751608 
@@ -343,7 +343,7 @@ Q 485.585188 114.716312 485.585188 115.880552
 L 485.585188 160.587368 
 Q 485.585188 161.751608 486.376533 161.751608 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #eff6ff; stroke: #1f6feb; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #eff6ff; stroke: #1f6feb; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
     <path d="M 572.105624 161.751608 
@@ -356,7 +356,7 @@ Q 571.314278 114.716312 571.314278 115.880552
 L 571.314278 160.587368 
 Q 571.314278 161.751608 572.105624 161.751608 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #f0fdf4; stroke: #15803d; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #f0fdf4; stroke: #15803d; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
     <path d="M 458.679442 258.771608 
@@ -369,7 +369,7 @@ Q 457.888097 196.213112 457.888097 197.377352
 L 457.888097 257.607368 
 Q 457.888097 258.771608 458.679442 258.771608 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #f8fafc; stroke: #6b7280; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #f8fafc; stroke: #6b7280; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="text_18">
     <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2430" transform="translate(418.077724 135.289272)">thermal</text>
@@ -440,22 +440,22 @@ z
    <g id="patch_11">
     <path d="M 473.236682 138.23396 
 Q 478.490077 138.23396 481.954618 138.23396 
-" clip-path="url(#p174c4f9694)" style="fill: none; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: none; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
     <path d="M 476.754618 135.63396 
 L 481.954618 138.23396 
 L 476.754618 140.83396 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #1f2430; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #1f2430; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
    </g>
    <g id="patch_12">
     <path d="M 558.965773 138.23396 
 Q 564.219168 138.23396 567.683709 138.23396 
-" clip-path="url(#p174c4f9694)" style="fill: none; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: none; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
     <path d="M 562.483709 135.63396 
 L 567.683709 138.23396 
 L 562.483709 140.83396 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #1f2430; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #1f2430; stroke: #1f2430; stroke-width: 1.6; stroke-linecap: round"/>
    </g>
    <g id="text_21">
     <!-- series: $R_{\rm tot}=\sum_i R_i$ -->
@@ -540,12 +540,12 @@ z
    <g id="patch_13">
     <path d="M 521.354002 167.397992 
 Q 521.354002 178.011933 521.354002 186.83702 
-" clip-path="url(#p174c4f9694)" style="fill: none; stroke: #6b7280; stroke-width: 1.6; stroke-linecap: round"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: none; stroke: #6b7280; stroke-width: 1.6; stroke-linecap: round"/>
     <path d="M 523.954002 181.63702 
 L 521.354002 186.83702 
 L 518.754002 181.63702 
 z
-" clip-path="url(#p174c4f9694)" style="fill: #6b7280; stroke: #6b7280; stroke-width: 1.6; stroke-linecap: round"/>
+" clip-path="url(#p10d3fb2d5f)" style="fill: #6b7280; stroke: #6b7280; stroke-width: 1.6; stroke-linecap: round"/>
    </g>
    <g id="text_22">
     <text style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'" transform="translate(472.005526 17.089326)">circuit thinking</text>
@@ -556,10 +556,10 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p53e7dc7823">
+  <clipPath id="p43da9741a7">
    <rect x="72.924911" y="64.49876" width="263.781818" height="232.848"/>
   </clipPath>
-  <clipPath id="p174c4f9694">
+  <clipPath id="p10d3fb2d5f">
    <rect x="389.463093" y="64.49876" width="263.781818" height="232.848"/>
   </clipPath>
  </defs>

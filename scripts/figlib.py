@@ -59,11 +59,80 @@ def figure(name: str):
     return deco
 
 
+def unclip(fig):
+    """Let annotations cross the axes edge instead of vanishing.
+
+    `ax.annotate` defaults to `clip_on=True`, so a label placed just outside its axes is
+    silently cut off. Every figure is swept here before it is written — the tight bounding
+    box on save then expands to include the text, which is what we want. Tick labels and
+    axis labels are left alone (matplotlib manages those).
+    """
+    from matplotlib.text import Annotation
+    for ax in fig.get_axes():
+        for t in ax.texts:
+            if isinstance(t, Annotation) and t.get_clip_on():
+                t.set_clip_on(False)
+
+
 def save(fig, name: str):
+    unclip(fig)
     for ext in ("svg", "pdf", "png"):
         fig.savefig(OUT / (name + "." + ext), facecolor="white")
     plt.close(fig)
     print("   " + name)
+
+
+def save_anim(name: str, fig, update, frames, fps: int = 12, dpi: int = 105, hold: int = 16):
+    """Write an animation twice: `name`.webp (what the site and the vault embed) and
+    `name`.gif (a compatibility fallback, downscaled and frame-thinned to stay small).
+
+    `update(i)` receives the values of `frames` and must redraw the artists of `fig`.
+    Every animation also gets a static *poster* (`save()`, a filmstrip), which is what the
+    PDF build uses.
+    """
+    from matplotlib.animation import FuncAnimation, PillowWriter
+    seq = list(frames)
+    if hold:                       # linger on the last frame: the eye needs a moment
+        seq = seq + [seq[-1]] * hold
+    anim = FuncAnimation(fig, update, frames=seq, interval=1000.0 / fps, blit=False)
+    gif = OUT / (name + ".gif")
+    webp = OUT / (name + ".webp")
+    unclip(fig)
+    anim.save(str(gif), writer=PillowWriter(fps=fps), dpi=dpi,
+              savefig_kwargs={"facecolor": "white"})
+    plt.close(fig)
+    try:
+        made = _webp_and_slim_gif(gif, webp)
+    except ImportError:                                   # pragma: no cover
+        made = " (no pillow: gif only)"
+    print("   %s.webp (%.0f KB) + .gif (%.0f KB)%s"
+          % (name, webp.stat().st_size / 1024, gif.stat().st_size / 1024,
+             "" if not made else made))
+
+
+def _webp_and_slim_gif(gif_path, webp_path):
+    """Animated WebP at full quality, plus a small GIF fallback (60% size, every 3rd frame)."""
+    from PIL import Image
+    im = Image.open(gif_path)
+    frames, duration = [], 80
+    try:
+        while True:
+            duration = im.info.get("duration", duration)
+            frames.append(im.convert("RGB").copy())
+            im.seek(im.tell() + 1)
+    except EOFError:
+        pass
+    if not frames:
+        return " (no frames)"
+    frames[0].save(webp_path, format="WEBP", save_all=True, append_images=frames[1:],
+                   duration=duration, loop=0, quality=68, method=6)
+    w, h = frames[0].size
+    small = [f.resize((int(w * 0.6), int(h * 0.6)), Image.LANCZOS)
+             .quantize(colors=48, method=Image.MEDIANCUT, dither=Image.Dither.NONE)
+             for f in frames[::3]]
+    small[0].save(gif_path, save_all=True, append_images=small[1:], duration=duration * 3,
+                  loop=0, optimize=True)
+    return ""
 
 
 def tidy(ax, grid=True):

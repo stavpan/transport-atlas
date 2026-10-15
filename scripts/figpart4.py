@@ -82,7 +82,7 @@ def fig_stability():
     a.plot(cfl, np.abs(1 - 1j * cfl * np.sin(np.pi)), color=ROSE, label="central, $k\\Delta x=\\pi$")
     a.axhline(1.0, color="#111827", ls="--", lw=1.2, label="marginal")
     a.axvline(1.0, color=MUTED, ls=":", lw=1)
-    a.text(1.01, 0.2, "CFL $=1$", fontsize=8.5, color=MUTED)
+    a.text(1.01, 0.62, "CFL $=1$", fontsize=8.5, color=MUTED)
     a.set_xlabel("CFL number $U\\Delta t/\\Delta x$"); a.set_ylabel("$|G|$")
     a.set_title("the Courant condition is a *stability* statement\n"
                 "not a resolution statement: accuracy is a separate battle")

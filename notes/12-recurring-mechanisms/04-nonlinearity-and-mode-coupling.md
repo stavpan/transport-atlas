@@ -64,6 +64,10 @@ preferred size. The right panel is the reason: only a *band* of wavenumbers grow
 curve has a maximum. Nonlinearity sets the final amplitude and arbitrates the competition between the
 surviving modes.](../../figures/reaction-diffusion-art.svg)
 
+![**Animation A4.** A smooth wave steepening into a shock. Nothing is added and nothing
+removed: the fast part of the wave catches up the slow part, and at $t=1$ the solution stops
+being differentiable. This is nonlinearity with no escape clause.](../../figures/anim-shock-formation.webp)
+
 ## L3 · The weakly nonlinear toolkit
 
 When the failure of superposition is *small*, perturbation theory turns a hard PDE into a small set of

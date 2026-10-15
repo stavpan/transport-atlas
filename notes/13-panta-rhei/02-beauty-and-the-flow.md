@@ -41,10 +41,18 @@ thousand timesteps. Nothing here is random: the filaments are the *deterministic
 stretch-and-fold. This is Aref's blinking vortex, and it is the same mechanism that swirls cream into
 coffee and then, given time, mixes it away.](../../figures/generative-flow-art.svg)
 
+![**Animation A1.** Marbling, in motion: the same two blinking vortices as the figure
+above, run for a few thousand timesteps. Watch the boundary being stretched into filaments —
+this is how a stirred cup mixes *without* any turbulence at all.](../../figures/anim-flow-marbling.webp)
+
 ![**Figure P2.** The other kind of beauty: a Turing pattern grown from two chemicals with a simple
 autocatalytic rule (left) and the reason it looks like this (right) — only a band of wavelengths can grow,
 so the system selects a size. This is the standard Gray–Scott system, and it is the ancestor of half the
 "natural" texture in computer graphics.](../../figures/reaction-diffusion-art.svg)
+
+![**Animation A2.** The same pattern growing: seeds are placed, spread, collide and
+settle. The wavelength is chosen by the dynamics, not by the seeds — and every spot stops
+itself by eating the fuel around it.](../../figures/anim-turing-growth.webp)
 
 ## L2 · Why they please: the psychology, briefly and without hand-waving
 

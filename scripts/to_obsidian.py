@@ -53,7 +53,7 @@ CALLOUT_BY_LABEL = [
 ]
 
 LADDER_RE = re.compile(r"^##\s+L([1-4])\s*[·—-]\s*(.+)$")
-IMAGE_RE = re.compile(r"!\[(.*?)\]\(((?:\.\./)*figures/[^)\s]+|[^)\s]+\.(?:svg|png|jpe?g|gif))\)", re.S)
+IMAGE_RE = re.compile(r"!\[(.*?)\]\(((?:\.\./)*figures/[^)\s]+|[^)\s]+\.(?:svg|png|jpe?g|gif|webp))\)", re.S)
 LINK_RE = re.compile(r"(?<!!)\[([^\]\n]*)\]\(([^)\s]+)\)")
 BLOCKQUOTE_LABEL_RE = re.compile(r"^>\s*\*\*(.{2,80}?)\*\*\.?\s*(.*)$")
 
@@ -594,7 +594,8 @@ def main():
 
     raw_notes = build.load_notes()
     cats = build.categories(raw_notes)
-    fig_names = {p.name for p in build.FIG_DIR.glob("*.svg")}
+    fig_names = {p.name for p in build.FIG_DIR.iterdir()
+                 if p.suffix.lower() in (".svg", ".webp")}
 
     def vault_title(n):
         if n["is_index"] and n["category"] == "00-atlas":
@@ -675,15 +676,20 @@ def main():
     written += [cheat, reading]
 
     assets.mkdir(parents=True, exist_ok=True)
-    for f in sorted(build.FIG_DIR.glob("*.svg")):
-        shutil.copy2(f, assets / f.name)
+    for f in sorted(build.FIG_DIR.iterdir()):
+        # animated posters (`anim-*.svg`) are print artefacts; the vault embeds the animation
+        if f.suffix.lower() in (".svg", ".webp") and not (
+                f.name.startswith("anim-") and f.suffix.lower() == ".svg"):
+            shutil.copy2(f, assets / f.name)
 
     extra = ({p.stem for p in vault.rglob("*.md")}
              | {p.name for p in vault.rglob("*.svg")}
-             | {p.stem for p in vault.rglob("*.svg")})
+             | {p.name for p in vault.rglob("*.webp")}
+             | {p.stem for p in vault.rglob("*.svg")}
+             | {p.stem for p in vault.rglob("*.webp")})
     links, embeds, problems = verify(written, extra)
     print("wrote %d notes + 2 companions + 1 canvas into %s" % (len(written) - 2, folder))
-    print("copied %d svg figures into %s" % (len(fig_names), assets))
+    print("copied %d figures (svg + animated webp) into %s" % (len(fig_names), assets))
     print("wikilinks: %d   embeds: %d   unresolved: %d" % (links, embeds, len(problems)))
     for p in problems[:20]:
         print("   !", p)

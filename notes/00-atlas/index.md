@@ -134,6 +134,11 @@ another field's problem, including the cases where that went wrong — before cl
 
 ## The map
 
+Every figure here is generated from a script and audited for legibility (text is never below
+8 pt, nothing is clipped, no two labels overlap), and seven of them are **animations** —
+the phenomena that *are* motion, numbered A1–A7, which play in the web and single-file editions
+and become four-panel filmstrips in print.
+
 ![**Figure 1.** Every note in the atlas, wired together. Colour marks the level at which a topic is first useful (blue L1, teal L2, violet L3, amber L4). The loops are real: homogenisation feeds subsidence, kinetic theory feeds turbulence closures, and optimal transport connects diffusion to geometry.](../../figures/concept-map.svg)
 
 ## Two habits that repay themselves

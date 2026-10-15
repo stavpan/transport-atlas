@@ -65,6 +65,10 @@ cutoff. Right: the same data after dividing sizes by $L^{D}$ and rescaling the d
 what "universality" looks like as a figure, and it is the check to run before believing any power-law
 exponent.](../../figures/scaling-collapse.svg)
 
+![**Animation A7.** Coarsening, with the structure factor beside it: domains merge, and the
+peak of $S(k)$ walks steadily to smaller $k$ while the curve keeps its shape — self-similarity
+in time, which is the same collapse as in the figure above.](../../figures/anim-coarsening.webp)
+
 ## L4 · Doing scaling work that survives scrutiny
 
 1. **Choose scales from physics, not from the data.** Fix $D$ and $\theta$ by an argument (or by theory),

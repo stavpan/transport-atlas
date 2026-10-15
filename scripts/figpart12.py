@@ -104,9 +104,10 @@ def fig_kuramoto():
     a.set_title("Kuramoto: order appears at a threshold")
     a.set_xlabel("coupling $K$"); a.set_ylabel("order parameter $r=|\\langle e^{i\\theta}\\rangle|$")
     a.legend(fontsize=8.5, loc="upper left")
-    a.text(Kc + 0.06, 0.06, "$K_c=2/\\pi g(0)=2\\gamma$", fontsize=9, color=ROSE, rotation=90,
-           va="bottom")
-    a.annotate("below threshold the spread of\nnatural frequencies wins", (0.45, 0.03), (0.55, 0.42),
+    a.text(Kc + 0.05, 0.55, "$K_c=2/\\pi g(0)=2\\gamma$", fontsize=8.8, color=ROSE,
+           ha="left")
+    a.annotate("below threshold the spread of\nnatural frequencies wins", (0.45, 0.03),
+               (0.12, 0.26), ha="left",
                fontsize=8.4, color=MUTED, arrowprops=dict(arrowstyle="->", color=MUTED, lw=1.0))
 
     for j, (K, ttl) in enumerate([(0.4, "below $K_c$: incoherent"),

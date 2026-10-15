@@ -54,3 +54,10 @@ This is chaotic advection, and it is the honest picture behind the phrase "all t
 If you are here for the mathematics, start at [the atlas](../00-atlas/index.md). If you are here for the
 theme, read the six notes above in order; the first three are about *what flows*, the last three about
 *what that costs*: direction, memory, and the impossibility of cleanly separating one field from another.
+
+> **On the moving pictures.** Some phenomena in this atlas *are* motion, and a still frame cannot show
+> them, so seven figures are animated: they are numbered **A1–A7** and marked by a small badge in the
+> caption. They play as animated WebP images (a GIF fallback of each lives in `figures/`), the print
+> edition shows a four-panel filmstrip in their place, and the single-file edition
+> (`dist/atlas-standalone.html`) carries them inside the file. Click any figure to see it enlarged;
+> press `/` to search, `a` for the atlas, `g` for the connection graph.

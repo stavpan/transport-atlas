@@ -55,6 +55,10 @@ line: slope = the Lyapunov exponent $\lambda\approx0.91$) until it saturates at 
 attractor. Here the Lyapunov time is about 1.1 time units, so $10^{-6}$ becomes O(1) in about 14 of
 them.](../../figures/chaos-sensitive-dependence.svg)
 
+![**Animation A5.** Two trajectories started $10^{-6}$ apart, drawn as they evolve. The
+separation grows exponentially until it saturates: after the Lyapunov time the two copies
+agree about nothing except the statistics.](../../figures/anim-lorenz-divergence.webp)
+
 Lyapunov times across the sciences, as commonly quoted (see the [bibliography](11-bibliography.md) for
 provenance) — the spread of *fourteen orders of magnitude* is the point:
 

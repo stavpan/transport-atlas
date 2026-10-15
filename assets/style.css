@@ -226,3 +226,88 @@ body{
 .legend{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;font-size:.75rem;color:var(--muted)}
 .legend .lg{display:inline-flex;align-items:center;gap:.3rem}
 .legend i{width:.7rem;height:.7rem;border-radius:50%;display:inline-block}
+
+/* ============================================================================
+   Reading polish — figure cards, callouts, deep-link anchors, lightbox,
+   reading progress, and print behaviour.
+   ========================================================================== */
+
+/* jumping to a heading must clear the sticky bar */
+.markdown h2,.markdown h3,.markdown h4{scroll-margin-top:4rem}
+.markdown h1,.markdown h2,.markdown h3{text-wrap:balance}
+
+/* the "§" deep link, visible on hover (and always for keyboard users) */
+.markdown .anchor{
+  margin-left:.45rem;font-size:.78em;text-decoration:none;color:var(--muted);
+  opacity:0;transition:opacity .12s ease;font-weight:400;
+}
+.markdown h2:hover .anchor,.markdown h3:hover .anchor,
+.markdown .anchor:focus-visible{opacity:.85}
+
+/* figures are cards: image, then its caption, as one object */
+.markdown figure{
+  margin:2rem 0;padding:.85rem .85rem .15rem;background:var(--card);
+  border:1px solid var(--border);border-radius:calc(var(--radius) + 2px);
+  box-shadow:var(--shadow);
+}
+.markdown figure img{display:block;width:100%;height:auto;border-radius:6px;background:#fff}
+.markdown figure figcaption{
+  font-size:.84rem;line-height:1.55;color:var(--muted);text-align:left;max-width:none;
+  padding:.7rem .1rem .6rem;margin-top:.35rem;border-top:1px dashed var(--border);
+}
+.markdown figure figcaption strong{color:var(--fg);font-weight:660}
+.markdown img{cursor:zoom-in}
+.markdown figcaption code{font-size:.82em}
+
+/* the keyboard hint under every article */
+.markdown .keys{margin-top:.7rem;font-size:.76rem;color:var(--muted)}
+.markdown .keys b{
+  font-family:var(--mono);font-weight:600;color:var(--fg);background:var(--code-bg);
+  border:1px solid var(--border);border-radius:4px;padding:0 .28rem;font-size:.95em;
+}
+
+/* callouts: the block that opens every note ("One-line picture · Prerequisites") */
+.markdown blockquote{
+  margin:1.3rem 0;padding:1rem 1.15rem .85rem 1.2rem;font-size:.97rem;color:var(--fg);
+  background:linear-gradient(180deg,var(--accent-soft),transparent 88%),var(--bg-alt);
+  border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;
+}
+.markdown blockquote p:first-child::before{
+  content:"\\201C";float:left;font-family:var(--serif);font-size:2.1rem;line-height:.85;
+  color:var(--accent);opacity:.45;margin:.05rem .45rem 0 0;
+}
+.markdown blockquote strong{color:var(--accent-2)}
+
+/* tables: tabular figures, quiet zebra, a readable hover */
+.markdown table{font-size:.88rem;font-variant-numeric:tabular-nums}
+.markdown th,.markdown td{padding:.42rem .65rem}
+.markdown thead th{background:color-mix(in srgb,var(--bg-alt) 80%,transparent);
+  border-bottom:2px solid var(--border)}
+.markdown tbody tr:hover{background:var(--accent-soft)}
+
+/* lightbox (filled by assets/atlas.js) */
+#lightbox{
+  position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+  background:rgba(8,10,18,.9);padding:2.2rem;cursor:zoom-out;
+}
+#lightbox.on{display:flex}
+#lightbox img{max-width:100%;max-height:100%;background:#fff;border-radius:10px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55)}
+
+/* reading progress bar (filled by assets/atlas.js) */
+#progress{
+  position:fixed;left:0;top:0;height:2px;width:0;z-index:210;pointer-events:none;
+  background:linear-gradient(90deg,var(--l1),var(--accent),var(--accent-2));
+}
+
+@media (max-width:520px){
+  .depth a{padding:.08rem .3rem;font-size:.68rem}
+}
+
+@media print{
+  .markdown figure{box-shadow:none;border-color:#bbb;break-inside:avoid;page-break-inside:avoid}
+  .markdown h2,.markdown h3{break-after:avoid;page-break-after:avoid}
+  .markdown .anchor{display:none}
+  #lightbox,#progress{display:none}
+}
