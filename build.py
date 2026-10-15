@@ -44,6 +44,39 @@ LEVEL_LABELS = {
     4: "L4 · numerics, limits & frontiers",
 }
 
+DEPTH_TITLES = {
+    1: "L1 · the plain picture — everyday words, no mathematics",
+    2: "L2 · mechanism & form — the term in the equation, the dimensionless number",
+    3: "L3 · analysis & guarantees — well-posedness, spectra, limits, invariants",
+    4: "L4 · numerics, limits & frontiers — what breaks, how to compute it, what is open",
+}
+
+MIRRORS = False   # set by main(): only link to the level mirrors when they were built
+
+
+def depth_switch(url: str, root: str, level: int, mirrors: bool) -> str:
+    """Topbar control: the depth you are reading, and how to reach the others.
+
+    The full build contains *every* rung, so its item is labelled `all` — a topbar reading
+    "L4 · numerics, limits & frontiers" on the front page was misleading: it is a description
+    of the deepest rung, not of what that page contains.
+    """
+    if not mirrors:
+        return ('<span class="lvl-badge" title="%s">%s</span>'
+                % (DEPTH_TITLES[level], LEVEL_LABELS[level]))
+    base = root if level == 4 else root + "/.."      # one level up when inside a mirror
+    out = ['<nav class="depth" aria-label="Depth of this rendering">',
+           '<span class="depth-label">depth</span>']
+    for k in (1, 2, 3):
+        on = ' class="on" aria-current="page"' if k == level else ""
+        out.append('<a%s href="%s/L%d/%s" title="%s">L%d</a>'
+                   % (on, base, k, url, DEPTH_TITLES[k], k))
+    on = ' class="on" aria-current="page"' if level == 4 else ""
+    out.append('<a%s href="%s/%s" title="%s">all (L1–L4)</a>'
+               % (on, base, url, DEPTH_TITLES[4]))
+    out.append("</nav>")
+    return "".join(out)
+
 KATEX_HEAD = (
     '<link rel="stylesheet" crossorigin="anonymous" '
     'href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">\n'
@@ -125,10 +158,6 @@ def categories(notes):
     return dict(sorted(cats.items()))
 
 
-def depth_badge(d: int) -> str:
-    return f'<span class="lvl-badge">from L{d}</span>'
-
-
 def catalog_html(cats, root: str) -> str:
     """The machine-generated half of the master note: one block per category."""
     out = []
@@ -163,7 +192,7 @@ def nav_html(cats, current_id: str, root: str, extras=("graph", "standalone")) -
     return "\n".join(parts)
 
 
-def build_graph(notes, cats, out_root: Path, root: str = "."):
+def build_graph(notes, cats, out_root: Path, root: str = ".", level: int = 4):
     """Write graph.html + graph.json: the real note-to-note link graph."""
     id_of = {"notes/" + n["rel"]: n["id"] for n in notes}
     cat_index = {key: i for i, key in enumerate(cats.keys())}
@@ -221,7 +250,7 @@ def build_graph(notes, cats, out_root: Path, root: str = "."):
     flat = [n for n in notes if not n["is_index"]]
     extras = ("graph", "standalone") if out_root == DIST else ("graph",)
     (out_root / "graph.html").write_text(
-        render_page(fake, body, cats, flat, root, 4, True, extras=extras), encoding="utf-8")
+        render_page(fake, body, cats, flat, root, level, True, extras=extras), encoding="utf-8")
 
 
 
@@ -329,7 +358,7 @@ def extract_toc(html: str, levels=(2, 3)) -> str:
 
 
 def render_page(note, body_md, cats, notes_flat, root, level, offline, toc_depth=3,
-                extras=("graph", "standalone")):
+                extras=("graph", "standalone"), depth_override=None):
     fragment = pandoc_fragment(body_md, offline=offline, toc_depth=toc_depth)
     fragment = fragment.replace("<!-- AUTO:CATALOG -->", catalog_html(cats, root))
     body = postprocess(fragment)
@@ -340,6 +369,9 @@ def render_page(note, body_md, cats, notes_flat, root, level, offline, toc_depth
             .replace("{{TITLE}}", note["title"])
             .replace("{{LEVEL}}", str(level))
             .replace("{{LEVEL_LABEL}}", LEVEL_LABELS[level])
+            .replace("{{DEPTH}}",
+                     depth_override if depth_override is not None
+                     else depth_switch(note["url"], root, level, MIRRORS))
             .replace("{{ROOT}}", root)
             .replace("{{ROOT_JSON}}", json.dumps(root))
             .replace("{{NAV}}", nav_html(cats, note["id"], root, extras))
@@ -484,7 +516,7 @@ def build_standalone(notes, cats, out_root: Path, offline: bool = True):
     page = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Transport Atlas — single-file edition</title>
+<title>Panta Rhei — single-file edition (the Transport Atlas)</title>
 <style>%s</style>
 %s
 <style>
@@ -505,8 +537,9 @@ article.markdown{max-width:78ch}
 </style>
 </head><body>
 <header class="topbar">
-  <span class="brand"><span class="brand-mark">∇·</span> Transport Atlas</span>
-  <span class="lvl-badge">single file · offline</span>
+  <span class="brand"><span class="brand-mark">πάντα ῥεῖ</span>
+    <span class="brand-name">Panta Rhei</span><span class="brand-sub">the Transport Atlas</span></span>
+  <span class="lvl-badge">one file · works offline</span>
   <div class="searchwrap"><input id="search" type="search" placeholder="filter notes…" autocomplete="off">
   <div id="results" class="results" hidden></div></div>
 </header>
@@ -518,10 +551,10 @@ article.markdown{max-width:78ch}
   %s
 </nav>
 <main class="content"><article class="markdown"><a id="top"></a>
-<h1>Transport Atlas — single-file edition</h1>
-<p class="top-note">This one HTML file contains every note, every figure and the search index. No
-server, no internet, no dependencies: it works from a USB stick, an email attachment or any static
-host. The full site (with the connection graph and level mirrors) is a folder away.</p>
+<h1>Panta Rhei — the whole atlas in one file</h1>
+<p class="top-note">Every note, every figure and the search index in a single HTML file: no server, no
+internet, no dependencies. It works from a USB stick, an email attachment or any static host. The full
+site — with the connection graph, the depth mirrors and the standalone search page — is a folder away.</p>
 %s
 </article></main></div>
 <script>
@@ -543,8 +576,11 @@ def build_all_in_one(notes, cats, level, out_root: Path, offline: bool = False):
     for n in flat:
         body = relink(trim(n["body"], level), "notes/" + n["category"], ".")
         chunks.append(f'# {n["title"]}\n\n{body}')
-    fake = {"title": "Transport Atlas — complete", "id": "__all__", "url": "all-in-one.html"}
-    page = render_page(fake, "\n\n".join(chunks), cats, flat, ".", level, offline, toc_depth=1)
+    fake = {"title": "Panta Rhei — the complete atlas (one scroll)", "id": "__all__",
+            "url": "all-in-one.html"}
+    page = render_page(fake, "\n\n".join(chunks), cats, flat, ".", level, offline, toc_depth=1,
+                       depth_override='<span class="lvl-badge" title="one scroll — every note, '
+                                      'every level">one scroll · every level</span>')
     (out_root / "all-in-one.html").write_text(page, encoding="utf-8")
 
 
@@ -552,8 +588,9 @@ def build_all_in_one(notes, cats, level, out_root: Path, offline: bool = False):
 # PDF (printable) build
 # --------------------------------------------------------------------------- #
 def pdf_markdown(notes, level):
-    out = ["---", 'title: "The Transport Atlas"',
-           'subtitle: "A layered reference for transport phenomena"',
+    out = ["---", 'title: "Panta Rhei"',
+           'subtitle: "all things flow — the Transport Atlas: a layered reference for transport phenomena"',
+           'author: "the Transport Atlas"',
            'date: "generated by build.py"', "---", ""]
     for n in notes:
         body = trim(n["body"], level)
@@ -631,6 +668,9 @@ def main():
     ap.add_argument("--check", action="store_true", help="audit links/figures and exit")
     args = ap.parse_args()
 
+    global MIRRORS
+    MIRRORS = bool(args.levels or args.all)
+
     notes = load_notes()
     cats = categories(notes)
     if not notes:
@@ -662,7 +702,7 @@ def main():
             shutil.rmtree(d, ignore_errors=True)
             print(f"level {lvl}: {build_site(notes, cats, lvl, d, args.offline):4d} pages"
                   f" -> {d}/index.html")
-            build_graph(notes, cats, d, ".")
+            build_graph(notes, cats, d, ".", lvl)
         build_all_in_one(notes, cats, 4, DIST, args.offline)
         print(f"single:   1 page  -> {DIST}/all-in-one.html")
 

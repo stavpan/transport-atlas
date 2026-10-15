@@ -76,6 +76,19 @@ body{
   color:var(--accent);background:var(--accent-soft);border:1px solid var(--border);
   padding:.12rem .5rem;border-radius:999px;white-space:nowrap;
 }
+
+/* depth switcher — which rendering you are in, and how to reach the others */
+.depth{display:flex;align-items:center;gap:.18rem;font-size:.72rem;white-space:nowrap}
+.depth-label{color:var(--muted);text-transform:uppercase;letter-spacing:.09em;
+  font-weight:700;margin-right:.3rem}
+.depth a{
+  padding:.11rem .48rem;border:1px solid var(--border);border-radius:999px;
+  text-decoration:none;color:var(--muted);font-weight:650;background:var(--card);
+}
+.depth a:hover{color:var(--accent);border-color:var(--accent)}
+.depth a.on{color:var(--accent);background:var(--accent-soft);border-color:var(--accent);
+  cursor:default}
+@media (max-width:640px){ .depth-label{display:none} .depth a{padding:.1rem .38rem} }
 .searchwrap{position:relative;margin-left:auto;min-width:min(26rem,45vw)}
 #search{
   width:100%;padding:.42rem .7rem;border-radius:8px;font:inherit;font-size:.9rem;
