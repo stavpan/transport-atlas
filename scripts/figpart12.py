@@ -56,7 +56,9 @@ def fig_soc_avalanches():
 
     a2 = b
     a2.set_title("The pile that never settles")
-    im = a2.imshow(g, cmap="magma", interpolation="nearest", origin="lower")
+    pile = LinearSegmentedColormap.from_list(
+        "pile", ["#ffffff", "#ffe9c9", "#fbbf6d", "#ef7d3b", "#c2410c", "#7c2d12"])
+    im = a2.imshow(g, cmap=pile, interpolation="nearest", origin="lower")
     a2.grid(False); a2.set_xticks([]); a2.set_yticks([])
     cb = plt.colorbar(im, ax=a2, fraction=0.045, pad=0.02)
     cb.set_label("grains (never $\\geq 4$ for long)", fontsize=8.4)

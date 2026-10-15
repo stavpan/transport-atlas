@@ -75,7 +75,9 @@ def fig_turing():
         u = u + Du2 * lap(u) - uvv + F * (1 - u)
         v = v + Dv2 * lap(v) + uvv - (F + K) * v
     b = axs[1]
-    b.imshow(v, cmap="magma", interpolation="bilinear")
+    b.imshow(v, cmap=LinearSegmentedColormap.from_list(
+        "soft", ["#ffffff", "#dceafe", "#8fb6f5", "#4f7fe0", "#26418f"]),
+        interpolation="bilinear")
     b.set_xticks([]); b.set_yticks([]); b.grid(False)
     b.set_title("Gray–Scott simulation on 128$^2$\n"
                 "the same nonlinearity that writes zebra stripes")

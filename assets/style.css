@@ -274,7 +274,7 @@ body{
   border-radius:0 var(--radius) var(--radius) 0;
 }
 .markdown blockquote p:first-child::before{
-  content:"\\201C";float:left;font-family:var(--serif);font-size:2.1rem;line-height:.85;
+  content:"\201C";float:left;font-family:var(--serif);font-size:2.1rem;line-height:.85;
   color:var(--accent);opacity:.45;margin:.05rem .45rem 0 0;
 }
 .markdown blockquote strong{color:var(--accent-2)}

@@ -113,14 +113,14 @@ def fig_flow_art():
     am = (asum / np.maximum(cnt, 1e-9)).T
     c = cnt.T
     val = np.log1p(c) / np.log1p(c.max())
-    hue = np.clip(0.50 + 0.46 * ((am + np.pi) / (2.0 * np.pi)) % 1.0, 0, 1)
-    sat = np.where(c > 0, 0.88, 0.0)
+    hue = np.clip(0.50 + 0.44 * ((am + np.pi) / (2.0 * np.pi)) % 1.0, 0, 1)
+    sat = np.where(c > 0, 0.94, 0.0)
     from matplotlib.colors import hsv_to_rgb
-    rgb = hsv_to_rgb(np.stack([hue, sat, np.where(c > 0, 0.25 + 0.75 * val, 0.0)], axis=-1))
+    rgb = hsv_to_rgb(np.stack([hue, sat, np.where(c > 0, 0.45 + 0.55 * val, 0.0)], axis=-1))
 
     fig, ax = plt.subplots(figsize=(7.6, 7.6))
     plain(ax, (-1.2, 1.2), (-1.2, 1.2))
-    ax.set_facecolor("#08090f")
+    ax.set_facecolor("#ffffff")
     ax.imshow(rgb, origin="lower", extent=[-1.2, 1.2, -1.2, 1.2], interpolation="bilinear",
               zorder=1)
     ax.text(-1.15, -1.13, "chaotic advection:  two point vortices blinking in turn.\n"
@@ -157,7 +157,7 @@ def fig_reaction_diffusion():
 
     from matplotlib.colors import LinearSegmentedColormap
     cmap = LinearSegmentedColormap.from_list(
-        "panta", ["#070b18", "#1b1b4b", "#5b21b6", "#1f6feb", "#0d9488", "#f0b429", "#fff7d6"])
+        "panta", ["#ffffff", "#fff3cd", "#f4b942", "#e8792b", "#0f9b8e", "#2b4c9b", "#3b1d6e"])
 
     fig, (a, b) = plt.subplots(1, 2, figsize=(12.0, 5.4),
                                gridspec_kw={"width_ratios": [1.15, 1]})
@@ -219,7 +219,9 @@ def fig_arrow_of_time():
     fig, (a, b, c) = plt.subplots(1, 3, figsize=(13.4, 4.1),
                                   gridspec_kw={"width_ratios": [1.25, 1, 1]})
     a.grid(False)
-    a.imshow(field, aspect="auto", origin="lower", cmap="magma",
+    a.imshow(field, aspect="auto", origin="lower",
+             cmap=LinearSegmentedColormap.from_list(
+                 "warmdiv", ["#12318f", "#7fb2ff", "#ffffff", "#ffc07a", "#c2410c"]),
              extent=[0, 8, 0, ts[-1]], interpolation="bilinear")
     a.set_title("Run the clock forward: roughness dissolves")
     a.set_xlabel("space $x$"); a.set_ylabel("time $t$")

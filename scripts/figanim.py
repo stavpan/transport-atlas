@@ -19,11 +19,14 @@ from figlib import (figure, save, save_anim, tidy, plain, arrow, box,
                     INK, MUTED, BLUE, TEAL, VIOLET, AMBER, ROSE, SLATE, GREEN, SKY)
 
 PANTA = LinearSegmentedColormap.from_list(
-    "panta", ["#070b18", "#1b1b4b", "#5b21b6", "#1f6feb", "#0d9488", "#f0b429", "#fff7d6"])
-FLOW = LinearSegmentedColormap.from_list(
-    "flow", ["#0b1020", "#123a6b", "#1f6feb", "#0d9488", "#a7f3d0"])
+    "panta", ["#ffffff", "#ffe9b0", "#f4b942", "#12a594", "#2b4c9b", "#3b1d6e"])
+GOLD = LinearSegmentedColormap.from_list(
+    "gold", ["#ffffff", "#fff3cd", "#f6c453", "#e8792b", "#0f9b8e", "#26356e"])
+PILE = LinearSegmentedColormap.from_list(
+    "pile", ["#ffffff", "#ffe9c9", "#fbbf6d", "#ef7d3b", "#c2410c", "#7c2d12"])
 DIVERGING = LinearSegmentedColormap.from_list(
-    "div", ["#1f6feb", "#7dd3fc", "#f8fafc", "#fda4af", "#e11d48"])
+    "div", ["#12318f", "#5b9bff", "#dbe9ff", "#ffffff", "#ffd9a8", "#f08a3c", "#a8320c"])
+AVALANCHE = ("#0d9488", "#f0b429")
 
 
 def filmstrip(name, title, panels, draw, figsize=(10.2, 2.9), note=""):
@@ -49,12 +52,12 @@ def filmstrip(name, title, panels, draw, figsize=(10.2, 2.9), note=""):
 def anim_marbling():
     """Chaotic advection in motion: a blob of dye folded into filaments."""
     rng = np.random.default_rng(2)
-    n = 6000
+    n = 2000
     x = rng.uniform(-1.1, 1.1, n)
     y = rng.uniform(-1.1, 1.1, n)
     hue = np.clip((np.arctan2(y, x) + np.pi) / (2 * np.pi), 0, 1)
     a, G, T, dt = 0.62, 0.55, 0.9, 0.01
-    nframes, per = 56, 30
+    nframes, per = 64, 28
     snaps = [(x.copy(), y.copy())]
     for f in range(nframes):
         for s in range(per):
@@ -70,24 +73,24 @@ def anim_marbling():
             y = (y + 1.2) % 2.4 - 1.2
         snaps.append((x.copy(), y.copy()))
 
-    cols = hsv_to_rgb(np.stack([0.50 + 0.46 * hue, np.full(n, 0.85),
-                                np.full(n, 0.98)], axis=-1))
+    cols = hsv_to_rgb(np.stack([0.50 + 0.46 * hue, np.full(n, 0.92),
+                                np.full(n, 0.82)], axis=-1))
 
     def draw(ax, snap, first):
-        ax.set_facecolor("#08090f")
-        ax.scatter(snap[0], snap[1], s=1.4, c=cols, marker=".", linewidths=0)
+        ax.set_facecolor("#ffffff")
+        ax.scatter(snap[0], snap[1], s=4.6, c=cols, marker=".", linewidths=0)
         ax.set_xlim(-1.15, 1.15); ax.set_ylim(-1.15, 1.15)
         ax.set_xticks([]); ax.set_yticks([])
         for s in ax.spines.values():
-            s.set_color("#2a3448")
+            s.set_color("#c9cfda")
 
     fig, ax = plt.subplots(figsize=(5.8, 4.3))
-    pts = ax.scatter(snaps[0][0], snaps[0][1], s=1.4, c=cols, marker=".", linewidths=0)
-    ax.set_facecolor("#08090f")
+    pts = ax.scatter(snaps[0][0], snaps[0][1], s=4.6, c=cols, marker=".", linewidths=0)
+    ax.set_facecolor("#ffffff")
     ax.set_xlim(-1.15, 1.15); ax.set_ylim(-1.15, 1.15)
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
-        s.set_color("#2a3448")
+        s.set_color("#c9cfda")
     ax.set_title("chaotic advection: two blinking vortices, one blob of dye", fontsize=10,
                  color=INK)
 
@@ -95,7 +98,7 @@ def anim_marbling():
         pts.set_offsets(np.column_stack(snaps[i]))
         return (pts,)
 
-    save_anim("anim-flow-marbling", fig, update, range(len(snaps)), fps=14, hold=10)
+    save_anim("anim-flow-marbling", fig, update, range(len(snaps)), fps=20, hold=12)
 
     filmstrip("anim-flow-marbling", "Chaotic advection: stretching and folding, forever",
               [(snaps[0], "t = 0"), (snaps[18], "$t$"), (snaps[36], "$t$"),
@@ -120,7 +123,7 @@ def anim_turing():
         v[m] = 0.27
     v += 0.02 * rng.random((n, n))
 
-    nframes, per = 60, steps // 60
+    nframes, per = 72, steps // 72
     snaps = []
     for f in range(nframes):
         for _ in range(per):
@@ -136,12 +139,12 @@ def anim_turing():
 
     def draw(ax, snap, first):
         ax.grid(False); ax.set_xticks([]); ax.set_yticks([])
-        ax.imshow(snap, cmap=PANTA, vmin=0, vmax=vmax, interpolation="bilinear", origin="lower")
+        ax.imshow(snap, cmap=GOLD, vmin=0, vmax=vmax, interpolation="bilinear", origin="lower")
         for s in ax.spines.values():
             s.set_visible(False)
 
     fig, ax = plt.subplots(figsize=(5.2, 4.4))
-    im = ax.imshow(snaps[0], cmap=PANTA, vmin=0, vmax=vmax, interpolation="bilinear",
+    im = ax.imshow(snaps[0], cmap=GOLD, vmin=0, vmax=vmax, interpolation="bilinear",
                    origin="lower")
     ax.grid(False); ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
@@ -152,7 +155,7 @@ def anim_turing():
         im.set_data(snaps[i])
         return (im,)
 
-    save_anim("anim-turing-growth", fig, update, range(nframes), fps=16, hold=10)
+    save_anim("anim-turing-growth", fig, update, range(nframes), fps=20, hold=12)
 
     filmstrip("anim-turing-growth", "Turing patterns: how a smooth state chooses a size",
               [(snaps[0], "seeded"), (snaps[15], "spreading"), (snaps[35], "competing"),
@@ -225,7 +228,7 @@ def anim_kuramoto():
         line.set_data(Ks[:i + 1], rs[:i + 1])
         return sc, ring, meanv, t0, line
 
-    save_anim("anim-kuramoto-locking", fig, update, range(nframes), fps=14, hold=10)
+    save_anim("anim-kuramoto-locking", fig, update, range(nframes), fps=20, hold=12)
 
     fig2 = plt.figure(figsize=(10.2, 2.9))
     gs = fig2.add_gridspec(1, 4, wspace=0.22)
@@ -247,7 +250,7 @@ def anim_shock():
     dx = L / N
     u0 = np.sin(x)
     u = u0.copy()
-    nframes, per = 60, 275
+    nframes, per = 80, 195
     snaps, times, t = [], [], 0.0
     for f in range(nframes):
         for _ in range(per):
@@ -298,7 +301,7 @@ def anim_shock():
                          % t)
         return line, note, heading
 
-    save_anim("anim-shock-formation", fig, update, range(nframes), fps=16, hold=10)
+    save_anim("anim-shock-formation", fig, update, range(nframes), fps=20, hold=12)
 
     tsel = [0, int(0.55 * nframes), int(0.95 * nframes), nframes - 1]
     filmstrip("anim-shock-formation", "How a smooth wave makes its own discontinuity",
@@ -331,7 +334,7 @@ def anim_lorenz():
     B = run([1.0 + 1e-6, 1.0, 1.0], 9000, dt)
     d = np.linalg.norm(A - B, axis=1)
     t = np.arange(A.shape[0]) * dt
-    nframes = 64
+    nframes = 72
     idx = [int(k * (A.shape[0] - 1) / (nframes - 1)) for k in range(nframes)]
 
     fig, (a, b) = plt.subplots(1, 2, figsize=(9.0, 4.0),
@@ -365,7 +368,7 @@ def anim_lorenz():
         stamp.set_text("$t$ = %.1f"% t[k] + ("" if d[k] < 1 else "   —  horizons gone"))
         return la, lb, ln, stamp
 
-    save_anim("anim-lorenz-divergence", fig, update, range(nframes), fps=16, hold=10)
+    save_anim("anim-lorenz-divergence", fig, update, range(nframes), fps=20, hold=12)
 
     fig2, (c, e) = plt.subplots(1, 2, figsize=(10.0, 3.6))
     tidy(c, grid=False)
@@ -416,7 +419,7 @@ def anim_soc():
     for _ in range(1200):                      # relax into the critical state
         drop()
 
-    nframes, per = 56, 55
+    nframes, per = 72, 42
     sizes, grids, tops, marked = [], [], [], []
     for f in range(nframes):
         seen = np.zeros((L, L), bool)
@@ -433,23 +436,23 @@ def anim_soc():
     bins = np.logspace(0, np.log10(max(real.max(), 10) + 1), 22)
     mid = np.sqrt(bins[1:] * bins[:-1])
 
-    mask_col = ((0.42, 0.05, 0.35), (1.0, 0.75, 0.15))
+    mask_col = AVALANCHE
 
     def pile_ax(ax, snap, edge, title):
-        ax.imshow(snap, cmap="magma", vmin=0, vmax=6, interpolation="nearest", origin="lower")
+        ax.imshow(snap, cmap=PILE, vmin=0, vmax=6, interpolation="nearest", origin="lower")
         ov = np.ma.masked_where(~edge, np.ones_like(snap, float))
         ax.imshow(ov, cmap=LinearSegmentedColormap.from_list("hot", mask_col),
-                  interpolation="nearest", origin="lower", alpha=0.75, vmin=0, vmax=1)
+                  interpolation="nearest", origin="lower", alpha=0.6, vmin=0, vmax=1)
         ax.grid(False); ax.set_xticks([]); ax.set_yticks([])
         ax.set_title(title, fontsize=9.5)
 
     fig, (a, b) = plt.subplots(1, 2, figsize=(9.0, 4.0),
                                gridspec_kw={"width_ratios": [1, 1.1]})
-    im = a.imshow(grids[0], cmap="magma", vmin=0, vmax=6, interpolation="nearest",
+    im = a.imshow(grids[0], cmap=PILE, vmin=0, vmax=6, interpolation="nearest",
                   origin="lower")
     ov = a.imshow(np.ma.masked_where(~marked[0], np.ones((L, L))),
                   cmap=LinearSegmentedColormap.from_list("hot", mask_col),
-                  interpolation="nearest", origin="lower", alpha=0.75, vmin=0, vmax=1)
+                  interpolation="nearest", origin="lower", alpha=0.6, vmin=0, vmax=1)
     a.grid(False); a.set_xticks([]); a.set_yticks([])
     a.set_title("the pile, and where it just collapsed", fontsize=9.5)
 
@@ -467,7 +470,7 @@ def anim_soc():
             return np.array([]), np.array([]), 0.0
         cnt, _ = np.histogram(v, bins=bins)
         dens = cnt / np.diff(bins) / v.size
-        ok = cnt >= 3
+        ok = cnt >= 4
         if ok.sum() < 3:
             return mid[ok], dens[ok], 0.0
         slope = np.polyfit(np.log(mid[ok]), np.log(dens[ok]), 1)[0]
@@ -487,7 +490,7 @@ def anim_soc():
             cap.set_text("%d drops" % (per * (i + 1)))
         return im, ov, hl, fit, cap
 
-    save_anim("anim-soc-avalanches", fig, update, range(nframes), fps=12, hold=10)
+    save_anim("anim-soc-avalanches", fig, update, range(nframes), fps=20, hold=12)
 
     fig2, (c, e) = plt.subplots(1, 2, figsize=(10.0, 3.7),
                                 gridspec_kw={"width_ratios": [1, 1.15]})
@@ -495,7 +498,7 @@ def anim_soc():
     tidy(e)
     cnt, _ = np.histogram(real, bins=bins)
     dens = cnt / np.diff(bins) / real.size
-    ok = cnt >= 3
+    ok = cnt >= 4
     e.loglog(mid[ok], dens[ok], "o", color=BLUE, ms=5)
     slope = np.polyfit(np.log(mid[ok]), np.log(dens[ok]), 1)[0]
     e.loglog(mid[ok], np.exp(np.polyval(np.polyfit(np.log(mid[ok]), np.log(dens[ok]), 1),
@@ -521,7 +524,7 @@ def anim_coarsening():
     c = 0.02 * rng.standard_normal((n, n))
     dt, kappa, M = 0.5, 1.0, 1.0
     denom = 1.0 + dt * M * kappa * k2 ** 2
-    nframes, per = 60, 44
+    nframes, per = 72, 37
     snaps, spectra = [], []
     for f in range(nframes):
         for _ in range(per):
@@ -588,7 +591,7 @@ def anim_coarsening():
         stamp.set_text("$t$ = %4d     domain size $\\sim$ %.0f cells" % (tspan[i], size))
         return im, ln, pk, stamp
 
-    save_anim("anim-coarsening", fig, update, range(nframes), fps=14, hold=10)
+    save_anim("anim-coarsening", fig, update, range(nframes), fps=20, hold=12)
 
     sel = [0, nframes // 3, 2 * nframes // 3, nframes - 1]
     filmstrip("anim-coarsening", "Coarsening: the pattern grows without changing its shape",

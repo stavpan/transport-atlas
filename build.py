@@ -396,7 +396,7 @@ def render_page(note, body_md, cats, notes_flat, root, level, offline, toc_depth
 # --------------------------------------------------------------------------- #
 # site assembly
 # --------------------------------------------------------------------------- #
-def copy_resources(out_root: Path):
+def copy_resources(out_root: Path, animations: bool = True):
     """Copy the CSS/JS and the vector figures into the built site.
 
     PNG versions stay in figures/ as a fallback for viewers without SVG/PDF
@@ -415,6 +415,7 @@ def copy_resources(out_root: Path):
             # the print build — the pages embed the animated .webp instead.
             if f.is_file() and f.suffix.lower() not in (".png", ".pdf", ".gif") \
                     and not (f.name.startswith("anim-") and f.suffix.lower() == ".svg") \
+                    and (animations or f.suffix.lower() != ".webp") \
                     and f.name != "template.html":
                 shutil.copy2(f, dst / f.name)
 
@@ -450,11 +451,20 @@ def build_site(notes, cats, level, out_root: Path, offline: bool = False) -> int
     # the single-file edition exists only at the site root, so mirror builds drop that link
     extras = ("graph", "standalone") if out_root == DIST else ("graph",)
     out_root.mkdir(parents=True, exist_ok=True)
-    copy_resources(out_root)
+    copy_resources(out_root, animations=(out_root == DIST))
     (out_root / "search-index.json").write_text(search_index(notes, cats), encoding="utf-8")
     pages = 0
     for note in notes:
         body_md = trim(note["body"], level)
+        if out_root != DIST:
+            # the depth mirrors are the lean editions: an animation is announced in words
+            # rather than shipped as a megabyte of frames (the full site and the single-file
+            # edition both play them).
+            body_md = re.sub(
+                r"!\[(\*\*Animation A\d+\.\*\*[^\]]*)\]\((?:\.\./)*figures/anim-[^)]+\)",
+                r"*\1 — animated in the full edition; a four-panel filmstrip of it is in "
+                r"`figures/` and in the print build.*",
+                body_md)
         depth = len(Path(note["url"]).parts) - 1
         root = "/".join([".."] * depth)
         dest = out_root / note["url"]

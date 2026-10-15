@@ -82,7 +82,7 @@ def save(fig, name: str):
     print("   " + name)
 
 
-def save_anim(name: str, fig, update, frames, fps: int = 12, dpi: int = 105, hold: int = 16):
+def save_anim(name: str, fig, update, frames, fps: int = 20, dpi: int = 115, hold: int = 12):
     """Write an animation twice: `name`.webp (what the site and the vault embed) and
     `name`.gif (a compatibility fallback, downscaled and frame-thinned to stay small).
 
@@ -169,16 +169,38 @@ def box(ax, xy, w, h, text="", fc="white", ec=INK, lw=1.2, fs=9.5, tc=None):
 
 
 
+def is_fresh(name: str) -> bool:
+    """True when every output of `name` already exists and is newer than the code that makes it.
+
+    This is what makes a rebuild cheap: editing one note does not regenerate 43 figures.  Pass
+    `--force` (or name the figures explicitly) to override.
+    """
+    exts = [".svg", ".pdf", ".png"] + ([".webp", ".gif"] if name.startswith("anim-") else [])
+    outs = [OUT / (name + e) for e in exts]
+    if not all(p.exists() for p in outs):
+        return False
+    fn = REGISTRY[name]
+    mod = sys.modules.get(fn.__module__)
+    srcs = [Path(__file__)]
+    if mod is not None and getattr(mod, "__file__", None):
+        srcs.append(Path(mod.__file__))
+    newest_code = max(p.stat().st_mtime for p in srcs if p.exists())
+    return min(p.stat().st_mtime for p in outs) > newest_code
+
+
 def main(argv):
     if "-l" in argv or "--list" in argv:
         for n in ORDER:
             print(n)
         return 0
+    force = "--force" in argv or "-f" in argv
     names = [a for a in argv if not a.startswith("-")] or ORDER
     unknown = [n for n in names if n not in REGISTRY]
     if unknown:
         print("unknown figure(s): " + ", ".join(unknown))
         return 2
+    if not force and not [a for a in argv if not a.startswith("-")]:
+        names = [n for n in names if not is_fresh(n)]
     print("writing %d figure(s) to %s" % (len(names), OUT))
     failed = 0
     for n in names:
