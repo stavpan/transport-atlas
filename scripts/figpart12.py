@@ -1,5 +1,6 @@
 """Part 12 — self-organised criticality and synchronisation."""
 import numpy as np
+from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 

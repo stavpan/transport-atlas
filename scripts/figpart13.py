@@ -1,5 +1,6 @@
 """Part 13 — the intersections map, the generative artwork, and the arrow of time."""
 import numpy as np
+from matplotlib.colors import LinearSegmentedColormap, hsv_to_rgb
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 

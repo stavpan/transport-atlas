@@ -1,5 +1,6 @@
 """Part 6 — shear dispersion and diffusion-driven pattern formation."""
 import numpy as np
+from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 
 from figlib import (figure, save, tidy, INK, MUTED, BLUE, TEAL, VIOLET, AMBER,
